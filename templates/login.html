@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ROTC Login - ArmorSafe</title>
+
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:24px;
+
+    font-family:'Inter',sans-serif;
+
+    background:
+    radial-gradient(circle at top left,
+    #2d8a44,
+    transparent 35%),
+
+    radial-gradient(circle at bottom right,
+    #183d22,
+    transparent 35%),
+
+    linear-gradient(
+    135deg,
+    #08170c,
+    #102916,
+    #08170c);
+
+    overflow-x:hidden;
+}
+
+/* =========================
+MAIN CONTAINER
+========================= */
+
+.page-wrapper{
+    width:100%;
+    max-width:1100px;
+    min-height:700px;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    background:
+    rgba(16,45,22,0.82);
+
+    backdrop-filter:blur(18px);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    overflow:hidden;
+
+    border-radius:32px;
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,0.45);
+}
+
+/* =========================
+LEFT BRANDING SIDE
+========================= */
+
+.branding-panel{
+    position:relative;
+
+    background:
+    linear-gradient(
+    145deg,
+    rgba(15,55,22,0.92),
+    rgba(8,25,12,0.95)),
+
+    url('https://images.unsplash.com/photo-1521295121783-8a321d551ad2?q=80&w=1200&auto=format&fit=crop');
+
+    background-size:cover;
+    background-position:center;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+}
+
+.branding-overlay{
+    position:absolute;
+    inset:0;
+
+    background:
+    radial-gradient(circle at top,
+    rgba(223,255,136,0.18),
+    transparent 60%);
+}
+
+.branding-content{
+    position:relative;
+    z-index:2;
+
+    text-align:center;
+
+    padding:40px;
+}
+
+.branding-content h1{
+    font-size:64px;
+    color:white;
+
+    font-family:'EB Garamond',serif;
+
+    margin-top:22px;
+    margin-bottom:12px;
+}
+
+.branding-content p{
+    color:rgba(255,255,255,0.78);
+
+    font-size:16px;
+    line-height:1.7;
+
+    max-width:350px;
+}
+
+/* =========================
+RIGHT LOGIN SIDE
+========================= */
+
+.content{
+    position:relative;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
+    padding:60px;
+}
+
+.org-name{
+    font-size:12px;
+    font-weight:700;
+
+    letter-spacing:.25em;
+
+    color:#dfff88;
+
+    text-transform:uppercase;
+
+    margin-bottom:14px;
+}
+
+h2{
+    font-family:'EB Garamond',serif;
+
+    font-size:clamp(42px,5vw,64px);
+
+    color:white;
+
+    line-height:1;
+
+    margin-bottom:10px;
+}
+
+.welcome-text{
+    color:rgba(255,255,255,0.75);
+
+    font-size:15px;
+
+    margin-bottom:34px;
+}
+
+/* =========================
+LOGO
+========================= */
+
+.logo-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.shield-svg{
+    width:120px;
+    height:120px;
+
+    filter:
+    drop-shadow(0 8px 18px rgba(0,0,0,0.4));
+}
+
+/* =========================
+ALERTS
+========================= */
+
+.alerts{
+    width:100%;
+    margin-bottom:18px;
+}
+
+.alert{
+    background:
+    rgba(255,80,80,0.12);
+
+    border:
+    1px solid rgba(255,100,100,0.22);
+
+    color:#ffc5c5;
+
+    padding:14px 16px;
+
+    border-radius:14px;
+
+    font-size:14px;
+
+    margin-bottom:10px;
+}
+
+/* =========================
+FORM CARD
+========================= */
+
+.form-card{
+    width:100%;
+
+    background:
+    rgba(255,255,255,0.04);
+
+    border:
+    1px solid rgba(255,255,255,0.06);
+
+    border-radius:28px;
+
+    padding:34px;
+
+    animation:fadeUp .5s ease;
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(18px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* =========================
+LABELS
+========================= */
+
+.field-label{
+    display:block;
+
+    font-size:13px;
+    font-weight:600;
+
+    color:#f1ffbc;
+
+    margin-bottom:10px;
+}
+
+/* =========================
+INPUTS
+========================= */
+
+.input-field{
+    width:100%;
+
+    background:
+    rgba(223,255,136,0.08);
+
+    border:
+    1px solid rgba(223,255,136,0.14);
+
+    border-radius:16px;
+
+    padding:16px 18px;
+
+    font-size:15px;
+
+    color:white;
+
+    outline:none;
+
+    transition:
+    .25s ease;
+
+    margin-bottom:20px;
+}
+
+.input-field::placeholder{
+    color:rgba(255,255,255,0.42);
+}
+
+.input-field:focus{
+    border-color:#dfff88;
+
+    background:
+    rgba(223,255,136,0.12);
+
+    box-shadow:
+    0 0 0 4px rgba(223,255,136,0.10);
+
+    transform:translateY(-1px);
+}
+
+/* =========================
+PASSWORD TOGGLE
+========================= */
+
+.password-wrapper{
+    position:relative;
+}
+
+.toggle-password{
+    position:absolute;
+
+    right:16px;
+    top:50%;
+
+    transform:translateY(-72%);
+
+    background:none;
+    border:none;
+
+    color:rgba(255,255,255,0.75);
+
+    font-size:18px;
+
+    cursor:pointer;
+}
+
+/* =========================
+FORGOT PASSWORD
+========================= */
+
+.forgot-row{
+    display:flex;
+    justify-content:flex-end;
+
+    margin-top:-8px;
+    margin-bottom:26px;
+}
+
+.forgot-link{
+    font-size:13px;
+
+    color:rgba(255,255,255,0.72);
+
+    text-decoration:none;
+
+    transition:.2s;
+}
+
+.forgot-link:hover{
+    color:white;
+}
+
+/* =========================
+BUTTON
+========================= */
+
+.btn-login{
+    width:100%;
+
+    border:none;
+
+    border-radius:18px;
+
+    padding:17px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #dfff88,
+    #b7ff57);
+
+    color:#173510;
+
+    font-size:22px;
+    font-weight:700;
+
+    font-family:'EB Garamond',serif;
+
+    cursor:pointer;
+
+    transition:.25s ease;
+}
+
+.btn-login:hover{
+    transform:
+    translateY(-2px)
+    scale(1.01);
+
+    box-shadow:
+    0 10px 25px rgba(183,255,87,0.28);
+}
+
+.btn-login:active{
+    transform:scale(.98);
+}
+
+/* =========================
+CREATE ACCOUNT
+========================= */
+
+.create_account-row{
+    text-align:center;
+
+    font-size:14px;
+
+    color:rgba(255,255,255,0.75);
+
+    margin-top:26px;
+}
+
+.create_account-row a{
+    color:#f1ffbc;
+
+    font-weight:700;
+
+    text-decoration:none;
+}
+
+.create_account-row a:hover{
+    color:white;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:900px){
+
+    body{
+        padding:0;
+    }
+
+    .page-wrapper{
+        grid-template-columns:1fr;
+
+        min-height:100vh;
+
+        border-radius:0;
+    }
+
+    .branding-panel{
+        display:none;
+    }
+
+    .content{
+        padding:34px 24px;
+    }
+
+    .form-card{
+        padding:28px 22px;
+        border-radius:24px;
+    }
+
+    h2{
+        font-size:46px;
+    }
+}
+
+@media(max-width:420px){
+
+    .content{
+        padding:28px 18px;
+    }
+
+    .input-field{
+        padding:15px 16px;
+    }
+
+    .btn-login{
+        font-size:20px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+    <!-- =========================
+    LEFT BRANDING PANEL
+    ========================== -->
+
+    <div class="branding-panel">
+
+        <div class="branding-overlay"></div>
+
+        <div class="branding-content">
+
+            <div class="logo-wrapper">
+
+                <svg class="shield-svg" viewBox="0 0 110 120" xmlns="http://www.w3.org/2000/svg">
+
+                    <path
+                    d="M55,8 L90,22 L90,64 Q90,93 55,112 Q20,93 20,64 L20,22 Z"
+                    fill="#1a5c28"
+                    stroke="#dfff88"
+                    stroke-width="3"/>
+
+                    <circle
+                    cx="55"
+                    cy="60"
+                    r="19"
+                    fill="#cc2222"
+                    stroke="#ffffff"
+                    stroke-width="2"/>
+
+                    <circle cx="55" cy="60" r="8" fill="#ffffff"/>
+                    <circle cx="55" cy="60" r="5" fill="#cc2222"/>
+
+                </svg>
+
+            </div>
+
+            <h1>ArmorSafe</h1>
+
+            <p>
+                Secure ROTC Equipment Management System for efficient inventory tracking, accountability, and equipment monitoring.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+    LOGIN SIDE
+    ========================== -->
+
+    <div class="content">
+
+        <div class="org-name">
+            LNU-AROTCU
+        </div>
+
+        <h2>Login</h2>
+
+        <p class="welcome-text">
+            Welcome back to ArmorSafe
+        </p>
+
+        <!-- ALERTS -->
+
+        <div class="alerts">
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+        </div>
+
+        <!-- FORM -->
+
+        <div class="form-card">
+
+            <form method="POST">
+
+                <label class="field-label">
+                    Username / Email
+                </label>
+
+                <input
+                class="input-field"
+                type="text"
+                name="username"
+                placeholder="Enter username or email"
+                required>
+
+                <label class="field-label">
+                    Password
+                </label>
+
+                <div class="password-wrapper">
+
+                    <input
+                    class="input-field"
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required>
+
+                    <button
+                    type="button"
+                    class="toggle-password"
+                    onclick="togglePassword()">
+                        👁
+                    </button>
+
+                </div>
+
+                <div class="forgot-row">
+
+                    <a href="/forgot_password" class="forgot-link">
+                        Forgot Password?
+                    </a>
+
+                </div>
+
+                <button type="submit" class="btn-login">
+                    Login
+                </button>
+
+            </form>
+
+        </div>
+
+        <div class="create_account-row">
+
+            Don’t have an account?
+
+            <a href="/create_account">
+                Sign up
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function togglePassword(){
+
+    const password =
+    document.getElementById("password");
+
+    if(password.type === "password"){
+        password.type = "text";
+    }
+
+    else{
+        password.type = "password";
+    }
+}
+
+</script>
+
+</body>
+</html>

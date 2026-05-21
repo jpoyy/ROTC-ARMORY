@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create Account - ArmorSafe</title>
+
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --bg:#07110c;
+    --card:#101d16;
+    --card2:#13241b;
+    --lime:#dfff88;
+    --lime2:#b8ff56;
+    --text:#ffffff;
+    --muted:rgba(255,255,255,0.68);
+    --border:rgba(255,255,255,0.08);
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+
+    font-family:'Inter',sans-serif;
+
+    background:
+    radial-gradient(circle at top left,
+    rgba(120,255,160,0.08),
+    transparent 25%),
+
+    radial-gradient(circle at bottom right,
+    rgba(223,255,136,0.10),
+    transparent 25%),
+
+    linear-gradient(
+    135deg,
+    #08170c,
+    #102916,
+    #08170c);
+
+    color:var(--text);
+
+    overflow-x:hidden;
+}
+
+/* =========================
+BACKGROUND GRID
+========================= */
+
+.bg-grid{
+    position:fixed;
+    inset:0;
+
+    background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+
+    background-size:40px 40px;
+
+    mask-image:radial-gradient(circle at center, black 35%, transparent 90%);
+
+    pointer-events:none;
+
+    z-index:0;
+}
+
+/* =========================
+MAIN LAYOUT
+========================= */
+
+.main-wrapper{
+    position:relative;
+    z-index:2;
+
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:32px;
+}
+
+/* =========================
+MAIN CARD
+========================= */
+
+.auth-container{
+    width:100%;
+    max-width:1350px;
+
+    display:grid;
+    grid-template-columns:480px 1fr;
+
+    background:
+    rgba(15, 45, 30, 0.795);
+
+    border:
+    1px solid rgba(255,255,255,0.07);
+
+    border-radius:34px;
+
+    overflow:hidden;
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+    0 25px 70px rgba(0,0,0,0.45);
+}
+
+/* =========================
+LEFT PANEL
+========================= */
+
+.left-panel{
+    position:relative;
+
+    padding:55px 48px;
+
+    background:
+    linear-gradient(
+    180deg,
+    rgba(20,48,31,0.96),
+    rgba(8,18,12,0.98));
+
+    overflow:hidden;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.left-panel::before{
+    content:"";
+
+    position:absolute;
+
+    width:450px;
+    height:450px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(circle,
+    rgba(223,255,136,0.14),
+    transparent 70%);
+
+    top:-180px;
+    right:-120px;
+}
+
+.left-panel::after{
+    content:"";
+
+    position:absolute;
+
+    width:260px;
+    height:260px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(circle,
+    rgba(183,255,87,0.10),
+    transparent 70%);
+
+    bottom:-100px;
+    left:-100px;
+}
+
+.brand-top{
+    position:relative;
+    z-index:2;
+}
+
+.logo-wrapper{
+    width:88px;
+    height:88px;
+
+    border-radius:24px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+    rgba(255,255,255,0.04);
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    margin-bottom:28px;
+
+    backdrop-filter:blur(10px);
+}
+
+.shield-svg{
+    width:58px;
+    height:58px;
+}
+
+.org-tag{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+
+    padding:10px 16px;
+
+    border-radius:999px;
+
+    background:
+    rgba(223,255,136,0.08);
+
+    border:
+    1px solid rgba(223,255,136,0.10);
+
+    color:var(--lime);
+
+    font-size:11px;
+    font-weight:700;
+
+    letter-spacing:.24em;
+
+    text-transform:uppercase;
+
+    margin-bottom:26px;
+}
+
+.brand-title{
+    font-family:'EB Garamond',serif;
+
+    font-size:72px;
+
+    line-height:0.92;
+
+    margin-bottom:20px;
+}
+
+.brand-desc{
+    color:rgba(255,255,255,0.72);
+
+    font-size:15px;
+
+    line-height:1.9;
+
+    max-width:340px;
+}
+
+.feature-list{
+    position:relative;
+    z-index:2;
+
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+
+    margin-top:40px;
+}
+
+.feature-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    color:rgba(255,255,255,0.78);
+
+    font-size:14px;
+}
+
+.feature-icon{
+    width:38px;
+    height:38px;
+
+    border-radius:12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+    rgba(223,255,136,0.08);
+
+    border:
+    1px solid rgba(223,255,136,0.08);
+
+    color:var(--lime);
+
+    flex-shrink:0;
+}
+
+/* =========================
+RIGHT PANEL
+========================= */
+
+.right-panel{
+    padding:48px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+/* =========================
+TOP HEADER
+========================= */
+
+.top-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    gap:20px;
+
+    margin-bottom:26px;
+}
+
+.back-link{
+    color:rgba(255,255,255,0.72);
+
+    text-decoration:none;
+
+    font-size:14px;
+    font-weight:600;
+
+    transition:.2s ease;
+}
+
+.back-link:hover{
+    color:white;
+}
+
+.login-pill{
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    background:
+    rgba(255,255,255,0.04);
+
+    border:
+    1px solid rgba(255,255,255,0.06);
+
+    color:rgba(255,255,255,0.78);
+
+    font-size:13px;
+}
+
+.login-pill a{
+    color:var(--lime);
+
+    text-decoration:none;
+
+    font-weight:700;
+}
+
+/* =========================
+HEADINGS
+========================= */
+
+.heading-small{
+    color:var(--lime);
+
+    font-size:12px;
+    font-weight:700;
+
+    letter-spacing:.24em;
+
+    text-transform:uppercase;
+
+    margin-bottom:14px;
+}
+
+h2{
+    font-family:'EB Garamond',serif;
+
+    font-size:64px;
+
+    line-height:0.95;
+
+    margin-bottom:14px;
+}
+
+.subtitle{
+    color:var(--muted);
+
+    font-size:15px;
+
+    line-height:1.7;
+
+    max-width:620px;
+
+    margin-bottom:34px;
+}
+
+/* =========================
+ALERTS
+========================= */
+
+.alerts{
+    margin-bottom:18px;
+}
+
+.alert{
+    background:
+    rgba(255,80,80,0.10);
+
+    border:
+    1px solid rgba(255,120,120,0.18);
+
+    color:#ffd6d6;
+
+    padding:15px 18px;
+
+    border-radius:18px;
+
+    font-size:14px;
+
+    margin-bottom:10px;
+}
+
+/* =========================
+FORM CARD
+========================= */
+
+.form-card{
+    background:
+    linear-gradient(
+    180deg,
+    rgba(255,255,255,0.03),
+    rgba(255,255,255,0.015));
+
+    border:
+    1px solid rgba(255,255,255,0.06);
+
+    border-radius:28px;
+
+    padding:30px;
+}
+
+/* =========================
+FORM GRID
+========================= */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+}
+
+.full-width{
+    grid-column:1/-1;
+}
+
+/* =========================
+INPUT GROUP
+========================= */
+
+.input-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.field-label{
+    font-size:13px;
+    font-weight:600;
+
+    color:#efffb8;
+
+    margin-bottom:10px;
+}
+
+/* =========================
+INPUTS
+========================= */
+
+.input-field{
+    width:100%;
+
+    padding:17px 18px;
+
+    border-radius:18px;
+
+    border:
+    1px solid rgba(255,255,255,0.08);
+
+    background:
+    rgba(255,255,255,0.03);
+
+    color:white;
+
+    font-size:14px;
+
+    outline:none;
+
+    transition:.25s ease;
+
+    font-family:'Inter',sans-serif;
+}
+
+.input-field::placeholder{
+    color:rgba(255,255,255,0.34);
+}
+
+.input-field:focus{
+    border-color:rgba(223,255,136,0.55);
+
+    background:
+    rgba(223,255,136,0.05);
+
+    box-shadow:
+    0 0 0 4px rgba(223,255,136,0.08);
+
+    transform:translateY(-1px);
+}
+
+/* DATE ICON */
+
+input[type="date"]{
+    color-scheme:dark;
+}
+
+/* SELECT */
+
+select.input-field{
+    appearance:none;
+    cursor:pointer;
+}
+
+select.input-field option{
+    background:#112017;
+    color:white;
+}
+
+/* =========================
+PASSWORD
+========================= */
+
+.password-wrapper{
+    position:relative;
+}
+
+.toggle-password{
+    position:absolute;
+
+    top:50%;
+    right:16px;
+
+    transform:translateY(-50%);
+
+    background:none;
+    border:none;
+
+    color:rgba(255,255,255,0.60);
+
+    cursor:pointer;
+
+    font-size:18px;
+}
+
+/* =========================
+HELP TEXT
+========================= */
+
+.helper-text{
+    margin-top:10px;
+
+    color:rgba(255,255,255,0.48);
+
+    font-size:12px;
+
+    line-height:1.6;
+}
+
+/* =========================
+BUTTON
+========================= */
+
+.btn-submit{
+    width:100%;
+
+    margin-top:28px;
+
+    border:none;
+
+    border-radius:22px;
+
+    padding:19px;
+
+    background:
+    linear-gradient(
+    135deg,
+    var(--lime),
+    var(--lime2));
+
+    color:#122014;
+
+    font-family:'EB Garamond',serif;
+
+    font-size:26px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s ease;
+}
+
+.btn-submit:hover{
+    transform:
+    translateY(-2px)
+    scale(1.01);
+
+    box-shadow:
+    0 16px 36px rgba(183,255,87,0.22);
+}
+
+.btn-submit:active{
+    transform:scale(.985);
+}
+
+/* =========================
+MOBILE LOGIN
+========================= */
+
+.mobile-login{
+    display:none;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:1180px){
+
+    .auth-container{
+        grid-template-columns:420px 1fr;
+    }
+
+    h2{
+        font-size:56px;
+    }
+}
+
+@media(max-width:980px){
+
+    .main-wrapper{
+        padding:18px;
+    }
+
+    .auth-container{
+        grid-template-columns:1fr;
+    }
+
+    .left-panel{
+        display:none;
+    }
+
+    .right-panel{
+        padding:30px 22px;
+    }
+
+    h2{
+        font-size:48px;
+    }
+
+    .mobile-login{
+        display:block;
+
+        margin-top:24px;
+
+        text-align:center;
+
+        color:rgba(255,255,255,0.70);
+
+        font-size:14px;
+    }
+
+    .mobile-login a{
+        color:var(--lime);
+
+        font-weight:700;
+
+        text-decoration:none;
+    }
+}
+
+@media(max-width:720px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+        gap:18px;
+    }
+
+    .full-width{
+        grid-column:auto;
+    }
+
+    .top-row{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    h2{
+        font-size:42px;
+    }
+
+    .form-card{
+        padding:22px;
+    }
+}
+
+@media(max-width:480px){
+
+    .main-wrapper{
+        padding:12px;
+    }
+
+    .right-panel{
+        padding:22px 16px;
+    }
+
+    h2{
+        font-size:36px;
+    }
+
+    .subtitle{
+        font-size:14px;
+    }
+
+    .btn-submit{
+        font-size:22px;
+        padding:17px;
+    }
+
+    .form-card{
+        border-radius:24px;
+    }
+
+    .input-field{
+        padding:15px 16px;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="bg-grid"></div>
+
+<div class="main-wrapper">
+
+    <div class="auth-container">
+
+        <!-- =========================
+        LEFT SIDE
+        ========================== -->
+
+        <div class="left-panel">
+
+            <div class="brand-top">
+
+                <div class="logo-wrapper">
+
+                    <svg class="shield-svg" viewBox="0 0 110 120" xmlns="http://www.w3.org/2000/svg">
+
+                        <path
+                        d="M55,8 L90,22 L90,64 Q90,93 55,112 Q20,93 20,64 L20,22 Z"
+                        fill="#1a5c28"
+                        stroke="#dfff88"
+                        stroke-width="3"/>
+
+                        <circle
+                        cx="55"
+                        cy="60"
+                        r="19"
+                        fill="#cc2222"
+                        stroke="#ffffff"
+                        stroke-width="2"/>
+
+                        <circle cx="55" cy="60" r="8" fill="#ffffff"/>
+                        <circle cx="55" cy="60" r="5" fill="#cc2222"/>
+
+                    </svg>
+
+                </div>
+
+                <div class="org-tag">
+                    LNU-AROTCU
+                </div>
+
+                <div class="brand-title">
+                    Armor<br>Safe
+                </div>
+
+                <div class="brand-desc">
+                    Modern ROTC equipment management built for accountability, organization, and secure inventory operations.
+                </div>
+
+            </div>
+
+            <div class="feature-list">
+
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    Secure Account Authentication
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    Real-Time Equipment Tracking
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    ROTC Inventory Monitoring
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- =========================
+        RIGHT SIDE
+        ========================== -->
+
+        <div class="right-panel">
+
+            <div class="top-row">
+
+                
+                <a href="/" class="back-link">
+                    
+                </a>
+
+                <div class="login-pill">
+                    Already registered?
+                    <a href="/">Login</a>
+                </div>
+
+            </div>
+
+            <div class="heading-small">
+                CREATE NEW ACCOUNT
+            </div>
+
+            <h2>
+                Join ArmorSafe
+            </h2>
+
+            <div class="subtitle">
+                Create your ROTC account to securely access the ArmorSafe inventory and equipment management system.
+            </div>
+
+            <!-- ALERTS -->
+
+            <div class="alerts">
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+            </div>
+
+            <!-- FORM -->
+
+            <div class="form-card">
+
+                <form method="POST">
+
+                    <div class="form-grid">
+
+                        <div class="input-group full-width">
+
+                            <label class="field-label">
+                                Full Name
+                            </label>
+
+                            <input
+                            class="input-field"
+                            type="text"
+                            name="full_name"
+                            placeholder="Juan Dela Cruz"
+                            required>
+
+                        </div>
+
+                        <div class="input-group">
+
+                            <label class="field-label">
+                                ROTC Class
+                            </label>
+
+                            <input
+                            class="input-field"
+                            type="text"
+                            name="rotc_class"
+                            placeholder="2025-2026"
+                            required>
+
+                        </div>
+
+                        <div class="input-group">
+
+                            <label class="field-label">
+                                Gender
+                            </label>
+
+                            <select class="input-field" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option>MALE</option>
+                                <option>FEMALE</option>
+                            </select>
+
+                        </div>
+
+                        <div class="input-group">
+
+                            <label class="field-label">
+                                Date of Birth
+                            </label>
+
+                            <input
+                            class="input-field"
+                            type="date"
+                            name="date_of_birth"
+                            required>
+
+                        </div>
+
+                        <div class="input-group">
+
+                            <label class="field-label">
+                                Course
+                            </label>
+
+                            <input
+                            class="input-field"
+                            type="text"
+                            name="course"
+                            placeholder="BSIT"
+                            required>
+
+                        </div>
+
+                        <div class="input-group">
+
+                            <label class="field-label">
+                                Phone Number
+                            </label>
+
+                            <input
+                            class="input-field"
+                            type="tel"
+                            name="contact_number"
+                            pattern="[0-9]{11}"
+                            maxlength="11"
+                            placeholder="09XXXXXXXXX"
+                            required>
+
+                        </div>
+
+                        <div class="input-group full-width">
+
+                            <label class="field-label">
+                                Email Address
+                            </label>
+
+                            <input
+                            class="input-field"
+                            type="email"
+                            name="email"
+                            placeholder="example@email.com"
+                            required>
+
+                        </div>
+
+                        <div class="input-group">
+
+                            <label class="field-label">
+                                Username
+                            </label>
+
+                            <input
+                            class="input-field"
+                            type="text"
+                            name="username"
+                            placeholder="Create username"
+                            required>
+
+                        </div>
+
+                        <div class="input-group">
+
+                            <label class="field-label">
+                                Password
+                            </label>
+
+                            <div class="password-wrapper">
+
+                                <input
+                                class="input-field"
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Create strong password"
+                                pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}"
+                                title="Must contain uppercase, lowercase, number, special character, and at least 8 characters"
+                                required>
+
+                                <button
+                                type="button"
+                                class="toggle-password"
+                                onclick="togglePassword('password')">
+                                    👁
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <div class="input-group full-width">
+
+                            <label class="field-label">
+                                Confirm Password
+                            </label>
+
+                            <div class="password-wrapper">
+
+                                <input
+                                class="input-field"
+                                type="password"
+                                id="confirm_password"
+                                name="confirm_password"
+                                placeholder="Re-enter your password"
+                                required>
+
+                                <button
+                                type="button"
+                                class="toggle-password"
+                                onclick="togglePassword('confirm_password')">
+                                    👁
+                                </button>
+
+                            </div>
+
+                            <div class="helper-text">
+                                Password must contain uppercase, lowercase, number, special character, and minimum 8 characters.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        Create Account
+                    </button>
+
+                </form>
+
+            </div>
+
+            <div class="mobile-login">
+                Already have an account?
+                <a href="/">Login</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function togglePassword(id){
+
+    const password =
+    document.getElementById(id);
+
+    if(password.type === "password"){
+        password.type = "text";
+    }
+
+    else{
+        password.type = "password";
+    }
+}
+
+</script>
+
+</body>
+</html>

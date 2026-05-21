@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Item</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        :root {
+            --bg-deep: #0a1f0a;
+            --bg-panel: #0f2d0f;
+            --bg-panel-2: #123615;
+            --bg-input: #1a4a1a;
+
+            --border: #2a6b2a;
+            --border-active: #4db84d;
+
+            --accent: #c8e63c;
+            --accent-hover: #d9f54a;
+
+            --text-primary: #dfff88;
+            --text-muted: #7aaa5a;
+            --text-label: #a0cc60;
+
+            --selected-text: #0a1f0a;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+
+            background:
+                radial-gradient(circle at top left, rgba(80,180,80,0.15), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(150,255,100,0.08), transparent 35%),
+                linear-gradient(135deg,#081708 0%,#103010 45%,#081708 100%);
+
+            min-height:100vh;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            font-family:'Rajdhani',sans-serif;
+
+            padding:40px 24px;
+
+            overflow-x:hidden;
+        }
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .modal{
+
+            width:100%;
+            max-width:1100px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(15,45,15,0.96),
+                    rgba(10,28,10,0.96)
+                );
+
+            border:1.5px solid rgba(90,180,90,0.18);
+
+            border-radius:28px;
+
+            overflow:hidden;
+
+            display:grid;
+            grid-template-columns:420px 1fr;
+
+            box-shadow:
+                0 0 0 1px rgba(200,230,60,0.04),
+                0 20px 60px rgba(0,0,0,0.55),
+                inset 0 1px 0 rgba(255,255,255,0.03);
+        }
+
+        /* =========================
+           LEFT PANEL
+        ========================= */
+
+        .side-panel{
+
+            position:relative;
+
+            padding:48px 42px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(20,60,20,0.95),
+                    rgba(10,25,10,0.98)
+                );
+
+            border-right:1px solid rgba(255,255,255,0.05);
+
+            display:flex;
+            flex-direction:column;
+            justify-content:space-between;
+
+            overflow:hidden;
+        }
+
+        .side-panel::before{
+
+            content:"";
+
+            position:absolute;
+
+            width:280px;
+            height:280px;
+
+            border-radius:50%;
+
+            background:
+                radial-gradient(circle,
+                rgba(200,230,60,0.15),
+                transparent 70%);
+
+            top:-120px;
+            right:-120px;
+        }
+
+        .panel-top{
+            position:relative;
+            z-index:2;
+        }
+
+        .mini-badge{
+
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+
+            padding:10px 16px;
+
+            border-radius:999px;
+
+            background:rgba(200,230,60,0.08);
+
+            border:1px solid rgba(200,230,60,0.16);
+
+            color:var(--accent);
+
+            font-size:0.72rem;
+            font-weight:700;
+            letter-spacing:.16em;
+
+            text-transform:uppercase;
+
+            margin-bottom:26px;
+        }
+
+        .panel-title{
+
+            font-size:4rem;
+            line-height:.9;
+
+            color:var(--text-primary);
+
+            margin-bottom:22px;
+
+            font-weight:700;
+        }
+
+        .panel-desc{
+
+            color:rgba(255,255,255,0.65);
+
+            line-height:1.7;
+
+            font-size:1rem;
+
+            max-width:290px;
+        }
+
+        .panel-bottom{
+            position:relative;
+            z-index:2;
+        }
+
+        .info-box{
+
+            background:rgba(255,255,255,0.04);
+
+            border:1px solid rgba(255,255,255,0.06);
+
+            border-radius:20px;
+
+            padding:20px;
+        }
+
+        .info-label{
+
+            color:var(--accent);
+
+            font-size:0.72rem;
+            font-weight:700;
+            letter-spacing:.16em;
+
+            text-transform:uppercase;
+
+            margin-bottom:10px;
+        }
+
+        .info-text{
+
+            color:rgba(255,255,255,0.72);
+
+            line-height:1.7;
+
+            font-size:0.95rem;
+        }
+
+        /* =========================
+           RIGHT PANEL
+        ========================= */
+
+        .form-panel{
+
+            padding:42px 46px;
+        }
+
+        .modal-header{
+
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+
+            margin-bottom:36px;
+        }
+
+        .header-title{
+
+            color:white;
+
+            font-size:1.7rem;
+            font-weight:700;
+
+            letter-spacing:.05em;
+        }
+
+        .close-btn{
+
+            width:42px;
+            height:42px;
+
+            border:none;
+
+            border-radius:12px;
+
+            background:rgba(255,255,255,0.04);
+
+            color:var(--text-muted);
+
+            font-size:1.1rem;
+
+            cursor:pointer;
+
+            transition:.2s;
+        }
+
+        .close-btn:hover{
+
+            background:rgba(200,230,60,0.10);
+
+            color:var(--accent);
+
+            transform:translateY(-2px);
+        }
+
+        /* =========================
+           FORM LAYOUT
+        ========================= */
+
+        form{
+            width:100%;
+        }
+
+        .form-grid{
+
+            display:grid;
+            grid-template-columns:1fr 1fr;
+
+            gap:28px;
+        }
+
+        .field-group{
+            margin-bottom:24px;
+        }
+
+        .field-label{
+
+            display:block;
+
+            font-size:0.75rem;
+            font-weight:700;
+
+            letter-spacing:0.18em;
+
+            color:var(--text-label);
+
+            text-transform:uppercase;
+
+            margin-bottom:12px;
+        }
+
+        .text-input{
+
+            width:100%;
+
+            background:rgba(255,255,255,0.03);
+
+            border:1.5px solid rgba(255,255,255,0.08);
+
+            border-radius:18px;
+
+            padding:18px 20px;
+
+            color:var(--text-primary);
+
+            font-family:'Rajdhani',sans-serif;
+
+            font-size:1.05rem;
+            font-weight:600;
+
+            outline:none;
+
+            transition:.2s;
+        }
+
+        .text-input::placeholder{
+            color:var(--text-muted);
+        }
+
+        .text-input:focus{
+
+            border-color:var(--border-active);
+
+            background:rgba(255,255,255,0.05);
+
+            box-shadow:0 0 0 4px rgba(77,184,77,0.10);
+        }
+
+        /* =========================
+           CATEGORY BUTTONS
+        ========================= */
+
+        .pill-group{
+
+            display:flex;
+            flex-wrap:wrap;
+
+            gap:12px;
+        }
+
+        .pill-btn{
+
+            flex:1;
+
+            min-width:140px;
+
+            background:rgba(255,255,255,0.03);
+
+            border:1.5px solid rgba(255,255,255,0.08);
+
+            border-radius:18px;
+
+            padding:16px;
+
+            color:var(--text-muted);
+
+            font-family:'Rajdhani',sans-serif;
+
+            font-size:1rem;
+            font-weight:700;
+
+            cursor:pointer;
+
+            transition:.18s;
+        }
+
+        .pill-btn:hover{
+
+            border-color:var(--border-active);
+
+            color:var(--text-primary);
+
+            transform:translateY(-2px);
+        }
+
+        .pill-btn.active{
+
+            background:var(--accent);
+
+            border-color:var(--accent);
+
+            color:var(--selected-text);
+
+            box-shadow:
+                0 10px 22px rgba(200,230,60,0.15);
+        }
+
+        /* =========================
+           CONDITION BUTTONS
+        ========================= */
+
+        .condition-group{
+
+            display:grid;
+
+            grid-template-columns:repeat(3,1fr);
+
+            gap:14px;
+        }
+
+        .condition-btn{
+
+            background:rgba(255,255,255,0.03);
+
+            border:1.5px solid rgba(255,255,255,0.08);
+
+            border-radius:18px;
+
+            padding:18px 16px;
+
+            color:var(--text-muted);
+
+            font-family:'Rajdhani',sans-serif;
+
+            font-size:1rem;
+            font-weight:700;
+
+            cursor:pointer;
+
+            transition:.18s;
+        }
+
+        .condition-btn:hover{
+
+            border-color:var(--border-active);
+
+            color:var(--text-primary);
+
+            transform:translateY(-2px);
+        }
+
+        .condition-btn.active{
+
+            border-color:var(--border-active);
+
+            background:rgba(77,184,77,0.12);
+
+            color:var(--text-primary);
+        }
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .action-row{
+
+            display:flex;
+
+            justify-content:flex-end;
+
+            gap:16px;
+
+            margin-top:34px;
+        }
+
+        .btn-cancel{
+
+            min-width:160px;
+
+            background:transparent;
+
+            border:1.5px solid rgba(255,255,255,0.08);
+
+            border-radius:18px;
+
+            padding:16px 24px;
+
+            color:var(--text-primary);
+
+            font-family:'Rajdhani',sans-serif;
+
+            font-size:0.92rem;
+            font-weight:700;
+
+            letter-spacing:0.14em;
+
+            text-transform:uppercase;
+
+            cursor:pointer;
+
+            transition:.18s;
+        }
+
+        .btn-cancel:hover{
+
+            border-color:var(--border-active);
+
+            background:rgba(77,184,77,0.06);
+        }
+
+        .btn-add{
+
+            min-width:220px;
+
+            background:var(--accent);
+
+            border:none;
+
+            border-radius:18px;
+
+            padding:16px 26px;
+
+            color:var(--selected-text);
+
+            font-family:'Rajdhani',sans-serif;
+
+            font-size:0.95rem;
+            font-weight:700;
+
+            letter-spacing:0.16em;
+
+            text-transform:uppercase;
+
+            cursor:pointer;
+
+            transition:.18s;
+        }
+
+        .btn-add:hover{
+
+            background:var(--accent-hover);
+
+            transform:translateY(-2px);
+        }
+
+        .btn-add:active{
+            transform:scale(0.98);
+        }
+
+        select.native-select{
+            display:none;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media(max-width:980px){
+
+            .modal{
+                grid-template-columns:1fr;
+            }
+
+            .side-panel{
+                border-right:none;
+                border-bottom:1px solid rgba(255,255,255,0.05);
+            }
+
+            .panel-title{
+                font-size:3rem;
+            }
+
+            .form-grid{
+                grid-template-columns:1fr;
+            }
+
+            .condition-group{
+                grid-template-columns:1fr;
+            }
+        }
+
+        @media(max-width:640px){
+
+            body{
+                padding:20px;
+            }
+
+            .side-panel,
+            .form-panel{
+                padding:28px;
+            }
+
+            .panel-title{
+                font-size:2.5rem;
+            }
+
+            .pill-btn{
+                min-width:100%;
+            }
+
+            .action-row{
+                flex-direction:column;
+            }
+
+            .btn-cancel,
+            .btn-add{
+                width:100%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="modal">
+
+    <!-- LEFT PANEL -->
+
+    <div class="side-panel">
+
+        <div class="panel-top">
+
+            <div class="mini-badge">
+                ArmorSafe System
+            </div>
+
+            <div class="panel-title">
+                Add<br>Inventory
+            </div>
+
+
+        </div>
+
+        <div class="panel-bottom">
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    QR Automation
+                </div>
+
+                <div class="info-text">
+                    Every newly added item automatically receives a unique QR code for easier monitoring and verification.
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT PANEL -->
+
+    <div class="form-panel">
+
+        <div class="modal-header">
+
+            <div class="header-title">
+                New Item Details
+            </div>
+
+            <button
+                class="close-btn"
+                type="button"
+                onclick="window.location.href='/inventory'">
+
+                ✕
+
+            </button>
+
+        </div>
+
+        <form method="POST" id="itemForm">
+
+            <!-- ITEM NAME -->
+
+            <div class="field-group">
+
+                <label class="field-label">
+                    Item Name
+                </label>
+
+                <input
+                    class="text-input"
+                    type="text"
+                    name="name"
+                    placeholder="e.g. M16A1 Rifle"
+                    required>
+
+            </div>
+
+            <!-- CATEGORY -->
+
+            <div class="field-group">
+
+                <label class="field-label">
+                    Category
+                </label>
+
+                <div class="pill-group" id="categoryGroup">
+
+                    <button type="button" class="pill-btn active" data-value="Firearms">
+                        Firearms
+                    </button>
+
+                    <button type="button" class="pill-btn" data-value="Swords">
+                        Swords
+                    </button>
+
+                    <button type="button" class="pill-btn" data-value="Uniforms">
+                        Uniforms
+                    </button>
+
+                    <button type="button" class="pill-btn" data-value="Audio-Visuals">
+                        Audio-Visuals
+                    </button>
+
+                </div>
+
+                <select name="category" id="categorySelect" class="native-select">
+
+                    <option value="Firearms" selected>Firearms</option>
+                    <option value="Swords">Swords</option>
+                    <option value="Uniforms">Uniforms</option>
+                    <option value="Audio-Visuals">Audio-Visuals</option>
+
+                </select>
+
+            </div>
+
+            <!-- CONDITION -->
+
+            <div class="field-group">
+
+                <label class="field-label">
+                    Condition
+                </label>
+
+                <div class="condition-group" id="conditionGroup">
+
+                    <button type="button" class="condition-btn active" data-value="Serviceable">
+                        Serviceable
+                    </button>
+
+                    <button type="button" class="condition-btn" data-value="Damaged">
+                        Damaged
+                    </button>
+
+                    <button type="button" class="condition-btn" data-value="Under Repair">
+                        Under Repair
+                    </button>
+
+                </div>
+
+                <select name="condition" id="conditionSelect" class="native-select">
+
+                    <option value="Serviceable" selected>
+                        Serviceable
+                    </option>
+
+                    <option value="Damaged">
+                        Damaged
+                    </option>
+
+                    <option value="Under Repair">
+                        Under Repair
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- ACTIONS -->
+
+            <div class="action-row">
+
+                <button
+                    type="button"
+                    class="btn-cancel"
+                    onclick="window.location.href='/inventory'">
+
+                    Cancel
+
+                </button>
+
+                <button type="submit" class="btn-add">
+
+                    Add Item
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+    function initToggleGroup(groupId, selectId) {
+
+        const group = document.getElementById(groupId);
+
+        const select = document.getElementById(selectId);
+
+        group.querySelectorAll('button').forEach(btn => {
+
+            btn.addEventListener('click', () => {
+
+                group.querySelectorAll('button').forEach(b => {
+                    b.classList.remove('active');
+                });
+
+                btn.classList.add('active');
+
+                select.value = btn.dataset.value;
+
+            });
+
+        });
+
+    }
+
+    initToggleGroup('categoryGroup', 'categorySelect');
+
+    initToggleGroup('conditionGroup', 'conditionSelect');
+
+</script>
+
+</body>
+</html>

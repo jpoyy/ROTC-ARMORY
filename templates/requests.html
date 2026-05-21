@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Requests – ArmorSafe</title>
+
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+:root{
+
+--bg:#0b2413;
+--card:#16351f;
+--card2:#1d4428;
+
+--lime:#dfff88;
+--lime2:#c8ff5f;
+
+--white:#ffffff;
+
+--text:rgba(255,255,255,0.84);
+--soft:rgba(255,255,255,0.60);
+
+--border:rgba(223,255,136,0.08);
+
+--glass:rgba(255,255,255,0.05);
+
+--pending-bg:rgba(255,208,77,0.14);
+--pending-text:#ffe88e;
+
+--approved-bg:rgba(92,255,138,0.14);
+--approved-text:#c8ffd8;
+
+--rejected-bg:rgba(255,95,95,0.13);
+--rejected-text:#ffd2d2;
+}
+
+body{
+font-family:'Inter',sans-serif;
+
+background:
+
+radial-gradient(
+circle at top left,
+rgba(130,255,150,0.12),
+transparent 30%
+),
+
+radial-gradient(
+circle at bottom right,
+rgba(223,255,136,0.14),
+transparent 35%
+),
+
+linear-gradient(
+135deg,
+#0b2413 0%,
+#145c29 45%,
+#0f3d1d 100%
+);
+
+color:white;
+
+min-height:100vh;
+
+overflow-x:hidden;
+}
+
+/* =========================
+BACKGROUND GRID
+========================= */
+
+.bg-grid{
+position:fixed;
+inset:0;
+
+background-image:
+linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+
+background-size:42px 42px;
+
+mask-image:radial-gradient(circle at center, black 35%, transparent 90%);
+
+pointer-events:none;
+
+z-index:0;
+}
+
+/* =========================
+MAIN PAGE
+========================= */
+
+.page{
+position:relative;
+z-index:2;
+
+width:100%;
+min-height:100vh;
+
+padding-bottom:40px;
+}
+
+/* =========================
+TOPBAR
+========================= */
+
+.topbar{
+position:sticky;
+top:0;
+z-index:50;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:18px 34px;
+
+background:
+rgba(11,36,19,0.72);
+
+backdrop-filter:blur(18px);
+
+border-bottom:
+1px solid rgba(255,255,255,0.06);
+}
+
+.back-link{
+display:flex;
+align-items:center;
+gap:10px;
+
+text-decoration:none;
+
+color:rgba(255,255,255,0.82);
+
+font-size:14px;
+font-weight:600;
+
+transition:.2s ease;
+}
+
+.back-link:hover{
+color:white;
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:14px;
+}
+
+.logo-box{
+width:44px;
+height:44px;
+
+border-radius:14px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:
+rgba(255,255,255,0.04);
+
+border:
+1px solid rgba(255,255,255,0.08);
+}
+
+.logo-box svg{
+width:24px;
+height:24px;
+}
+
+.brand-text{
+display:flex;
+flex-direction:column;
+}
+
+.brand-title{
+font-family:'EB Garamond',serif;
+
+font-size:22px;
+
+line-height:1;
+}
+
+.brand-sub{
+font-size:11px;
+letter-spacing:.20em;
+
+text-transform:uppercase;
+
+color:var(--lime);
+
+margin-top:3px;
+}
+
+/* =========================
+HEADER
+========================= */
+
+.hero{
+padding:
+60px 32px 34px;
+}
+
+.hero-inner{
+max-width:1400px;
+margin:auto;
+}
+
+.page-tag{
+display:inline-flex;
+align-items:center;
+gap:8px;
+
+padding:10px 18px;
+
+border-radius:999px;
+
+background:
+rgba(223,255,136,0.08);
+
+border:
+1px solid rgba(223,255,136,0.10);
+
+color:var(--lime);
+
+font-size:11px;
+font-weight:700;
+
+letter-spacing:.24em;
+
+text-transform:uppercase;
+
+margin-bottom:22px;
+}
+
+.hero-row{
+display:flex;
+justify-content:space-between;
+align-items:flex-end;
+gap:30px;
+flex-wrap:wrap;
+}
+
+.hero-left h1{
+font-family:'EB Garamond',serif;
+
+font-size:72px;
+
+line-height:0.95;
+
+margin-bottom:16px;
+}
+
+.hero-left p{
+font-size:16px;
+
+line-height:1.8;
+
+color:var(--text);
+
+max-width:700px;
+}
+
+/* =========================
+FILTER SECTION
+========================= */
+
+.filter-wrapper{
+max-width:1400px;
+margin:auto;
+
+padding:0 32px 34px;
+}
+
+.filter-card{
+background:
+rgba(255,255,255,0.03);
+
+border:
+1px solid rgba(255,255,255,0.06);
+
+border-radius:30px;
+
+padding:26px;
+}
+
+.filter-group{
+margin-bottom:0;
+}
+
+.filter-label{
+display:block;
+
+margin-bottom:14px;
+
+font-size:12px;
+font-weight:700;
+
+letter-spacing:.20em;
+
+text-transform:uppercase;
+
+color:var(--lime);
+}
+
+.chip-row{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+}
+
+.chip{
+padding:12px 18px;
+
+border-radius:16px;
+
+text-decoration:none;
+
+background:
+rgba(255,255,255,0.04);
+
+border:
+1px solid rgba(255,255,255,0.08);
+
+color:rgba(255,255,255,0.82);
+
+font-size:14px;
+font-weight:600;
+
+transition:.2s ease;
+}
+
+.chip:hover,
+.chip.active{
+background:
+rgba(223,255,136,0.14);
+
+border-color:
+rgba(223,255,136,0.22);
+
+color:var(--lime);
+
+transform:translateY(-1px);
+}
+
+/* =========================
+REQUEST GRID
+========================= */
+
+.requests-list{
+max-width:1400px;
+margin:auto;
+
+padding:0 32px;
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+gap:24px;
+}
+
+/* =========================
+REQUEST CARD
+========================= */
+
+.request-card{
+position:relative;
+
+background:
+linear-gradient(
+180deg,
+rgba(255,255,255,0.04),
+rgba(255,255,255,0.02));
+
+border:
+1px solid rgba(255,255,255,0.07);
+
+border-radius:28px;
+
+overflow:hidden;
+
+transition:.25s ease;
+
+backdrop-filter:blur(16px);
+}
+
+.request-card:hover{
+transform:translateY(-5px);
+
+border-color:
+rgba(223,255,136,0.16);
+
+box-shadow:
+0 20px 35px rgba(0,0,0,0.28);
+}
+
+.card-top{
+padding:24px;
+position:relative;
+}
+
+.card-glow{
+position:absolute;
+
+width:180px;
+height:180px;
+
+border-radius:50%;
+
+background:
+radial-gradient(circle,
+rgba(223,255,136,0.10),
+transparent 70%);
+
+top:-80px;
+right:-80px;
+
+pointer-events:none;
+}
+
+/* =========================
+CARD HEADER
+========================= */
+
+.card-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+gap:10px;
+
+margin-bottom:18px;
+}
+
+.req-type{
+padding:8px 14px;
+
+border-radius:999px;
+
+background:
+rgba(223,255,136,0.12);
+
+border:
+1px solid rgba(223,255,136,0.14);
+
+font-size:11px;
+font-weight:700;
+
+letter-spacing:.10em;
+
+color:var(--lime);
+}
+
+.status-badge{
+padding:8px 14px;
+
+border-radius:999px;
+
+font-size:11px;
+font-weight:700;
+}
+
+.pending{
+background:var(--pending-bg);
+color:var(--pending-text);
+}
+
+.approved{
+background:var(--approved-bg);
+color:var(--approved-text);
+}
+
+.rejected{
+background:var(--rejected-bg);
+color:var(--rejected-text);
+}
+
+.req-id{
+font-size:12px;
+color:var(--soft);
+
+margin-bottom:10px;
+}
+
+.item-title{
+font-family:'EB Garamond',serif;
+
+font-size:34px;
+
+line-height:1.1;
+
+margin-bottom:22px;
+}
+
+/* =========================
+SECTIONS
+========================= */
+
+.info-box{
+background:
+rgba(255,255,255,0.04);
+
+border:
+1px solid rgba(255,255,255,0.05);
+
+padding:18px;
+
+border-radius:20px;
+
+margin-bottom:16px;
+}
+
+.info-label{
+font-size:11px;
+font-weight:700;
+
+letter-spacing:.16em;
+
+text-transform:uppercase;
+
+color:var(--lime);
+
+margin-bottom:10px;
+}
+
+.info-value{
+font-size:15px;
+font-weight:600;
+}
+
+/* =========================
+FLOW
+========================= */
+
+.condition-flow{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.state{
+flex:1;
+
+padding:14px;
+
+border-radius:16px;
+
+text-align:center;
+
+background:
+rgba(255,255,255,0.05);
+
+font-size:14px;
+font-weight:700;
+}
+
+.new-state{
+background:
+rgba(223,255,136,0.12);
+
+color:var(--lime);
+}
+
+.arrow{
+font-size:22px;
+color:var(--lime);
+}
+
+/* =========================
+META
+========================= */
+
+.meta-row{
+display:flex;
+justify-content:space-between;
+gap:10px;
+flex-wrap:wrap;
+
+margin-top:18px;
+
+font-size:13px;
+color:var(--soft);
+}
+
+/* =========================
+ACTIONS
+========================= */
+
+.card-actions{
+padding:0 24px 24px;
+
+display:flex;
+gap:12px;
+}
+
+.action-btn{
+flex:1;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+padding:14px;
+
+border:none;
+
+border-radius:16px;
+
+font-size:14px;
+font-weight:700;
+
+cursor:pointer;
+
+transition:.2s ease;
+
+font-family:'Inter',sans-serif;
+}
+
+.action-btn:hover{
+transform:translateY(-2px);
+}
+
+.reject-btn{
+background:
+rgba(255,95,95,0.14);
+
+border:
+1px solid rgba(255,95,95,0.16);
+
+color:#ffd2d2;
+}
+
+.approve-btn{
+background:
+linear-gradient(
+135deg,
+var(--lime),
+var(--lime2));
+
+color:#102014;
+}
+
+/* =========================
+EMPTY
+========================= */
+
+.empty{
+max-width:1400px;
+margin:auto;
+
+padding:100px 20px;
+
+text-align:center;
+
+background:
+rgba(255,255,255,0.03);
+
+border:
+1px solid rgba(255,255,255,0.06);
+
+border-radius:30px;
+}
+
+.empty h3{
+font-family:'EB Garamond',serif;
+
+font-size:42px;
+
+margin-bottom:12px;
+}
+
+.empty p{
+color:var(--text);
+font-size:15px;
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:980px){
+
+.hero-left h1{
+font-size:58px;
+}
+
+.hero{
+padding-top:40px;
+}
+
+.topbar{
+padding:16px 20px;
+}
+
+.requests-list,
+.filter-wrapper,
+.hero{
+padding-left:20px;
+padding-right:20px;
+}
+}
+
+@media(max-width:720px){
+
+.hero-left h1{
+font-size:46px;
+}
+
+.requests-list{
+grid-template-columns:1fr;
+}
+
+.card-actions{
+flex-direction:column;
+}
+
+.condition-flow{
+flex-direction:column;
+}
+
+.arrow{
+transform:rotate(90deg);
+}
+}
+
+@media(max-width:480px){
+
+.hero-left h1{
+font-size:38px;
+}
+
+.item-title{
+font-size:28px;
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="bg-grid"></div>
+
+<div class="page">
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+
+<a href="/dashboard" class="back-link">
+← Back to Main Menu
+</a>
+
+<div class="brand">
+
+<div class="logo-box">
+
+<svg viewBox="0 0 110 120" xmlns="http://www.w3.org/2000/svg">
+
+<path
+d="M55,8 L90,22 L90,64 Q90,93 55,112 Q20,93 20,64 L20,22 Z"
+fill="#1a5c28"
+stroke="#dfff88"
+stroke-width="3"/>
+
+<circle
+cx="55"
+cy="60"
+r="19"
+fill="#cc2222"
+stroke="#ffffff"
+stroke-width="2"/>
+
+<circle cx="55" cy="60" r="8" fill="#ffffff"/>
+<circle cx="55" cy="60" r="5" fill="#cc2222"/>
+
+</svg>
+
+</div>
+
+<div class="brand-text">
+<div class="brand-title">ArmorSafe</div>
+<div class="brand-sub">Request Center</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- HERO -->
+
+<div class="hero">
+
+<div class="hero-inner">
+
+<div class="page-tag">
+LNU-AROTCU REQUEST MANAGEMENT
+</div>
+
+<div class="hero-row">
+
+<div class="hero-left">
+
+<h1>
+Requests
+</h1>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- FILTERS -->
+
+<div class="filter-wrapper">
+
+<div class="filter-card">
+
+<div class="filter-group">
+
+<div class="filter-label">
+Request Status
+</div>
+
+<div class="chip-row">
+
+{% set status_filter = request.args.get('status', '') %}
+
+{% set pending_count = requests | selectattr('5', 'equalto', 'Pending') | list | length %}
+{% set approved_count = requests | selectattr('5', 'equalto', 'Approved') | list | length %}
+{% set rejected_count = requests | selectattr('5', 'equalto', 'Rejected') | list | length %}
+
+{% set filtered = requests | selectattr('5','equalto',status_filter) | list if status_filter else requests %}
+
+<a href="?status="
+class="chip {% if status_filter=='' %}active{% endif %}">
+All ({{ requests|length }})
+</a>
+
+<a href="?status=Pending"
+class="chip {% if status_filter=='Pending' %}active{% endif %}">
+Pending ({{ pending_count }})
+</a>
+
+<a href="?status=Approved"
+class="chip {% if status_filter=='Approved' %}active{% endif %}">
+Approved ({{ approved_count }})
+</a>
+
+<a href="?status=Rejected"
+class="chip {% if status_filter=='Rejected' %}active{% endif %}">
+Rejected ({{ rejected_count }})
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- REQUESTS -->
+
+{% if filtered %}
+
+<div class="requests-list">
+
+{% for r in filtered %}
+
+{% set status_lower = r[5]|lower %}
+
+<div class="request-card">
+
+<div class="card-top">
+
+<div class="card-glow"></div>
+
+<div class="card-header">
+
+<div class="req-type">
+{{ r[10] }}
+</div>
+
+<div class="status-badge {{ status_lower }}">
+{{ r[5] }}
+</div>
+
+</div>
+
+<div class="req-id">
+REQ-{{ '%03d'|format(r[0]) }}
+</div>
+
+<div class="item-title">
+{{ r[8] }}
+</div>
+
+<div class="info-box">
+
+<div class="info-label">
+Requested By
+</div>
+
+<div class="info-value">
+{{ r[7] }}
+</div>
+
+</div>
+
+{% if r[10] == 'ADD' %}
+
+<div class="info-box">
+
+<div class="info-label">
+Item Verification
+</div>
+
+<div class="meta-row">
+<span>Category: {{ r[4] }}</span>
+<span>Condition: {{ r[3] }}</span>
+</div>
+
+</div>
+
+{% else %}
+
+<div class="info-box">
+
+<div class="info-label">
+Requested Change
+</div>
+
+<div class="condition-flow">
+
+<div class="state">
+{{ r[9] }}
+</div>
+
+<div class="arrow">
+→
+</div>
+
+<div class="state new-state">
+{{ r[3] }}
+</div>
+
+</div>
+
+</div>
+
+{% endif %}
+
+<div class="meta-row">
+
+<span>
+{{ r[6] }}
+</span>
+
+<span>
+{{ r[10] }}
+</span>
+
+</div>
+
+</div>
+
+{% if r[5] == 'Pending' %}
+
+<div class="card-actions">
+
+<form
+method="POST"
+action="{% if r[10]=='ADD' %}/request_add/reject/{{ r[0] }}{% elif r[10]=='DELETE' %}/request_delete/reject/{{ r[0] }}{% else %}/request/reject/{{ r[0] }}{% endif %}"
+style="flex:1;">
+
+<button class="action-btn reject-btn">
+Reject
+</button>
+
+</form>
+
+<form
+method="POST"
+action="{% if r[10]=='ADD' %}/request_add/approve/{{ r[0] }}{% elif r[10]=='DELETE' %}/request_delete/approve/{{ r[0] }}{% else %}/request/approve/{{ r[0] }}{% endif %}"
+style="flex:1;">
+
+<button class="action-btn approve-btn">
+Approve
+</button>
+
+</form>
+
+</div>
+
+{% endif %}
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty">
+
+<h3>
+No Requests Found
+</h3>
+
+<p>
+There are currently no requests matching the selected filter.
+</p>
+
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>

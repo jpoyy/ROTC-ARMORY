@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Scan QR - ArmorSafe</title>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+
+    --bg-dark:#061109;
+    --bg-green:#0d3418;
+    --panel:#102f18;
+
+    --lime:#dfff88;
+    --lime-bright:#f4ffc8;
+
+    --text:#ffffff;
+    --text-soft:rgba(255,255,255,0.72);
+
+    --border:rgba(255,255,255,0.08);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    min-height:100vh;
+
+    background:
+        radial-gradient(circle at top left,
+        rgba(120,255,120,0.10),
+        transparent 28%),
+
+        radial-gradient(circle at bottom right,
+        rgba(223,255,136,0.06),
+        transparent 30%),
+
+        linear-gradient(
+            135deg,
+            #07140b 0%,
+            #0d3418 45%,
+            #08160c 100%
+        );
+
+    font-family:'Rajdhani',sans-serif;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:28px;
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.scan-container{
+
+    width:100%;
+    max-width:760px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(16,47,24,0.96),
+            rgba(8,20,10,0.96)
+        );
+
+    border:1px solid rgba(255,255,255,0.06);
+
+    border-radius:34px;
+
+    padding:42px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.45),
+        inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.top-badge{
+
+    width:fit-content;
+
+    margin:0 auto 18px;
+
+    padding:10px 18px;
+
+    border-radius:999px;
+
+    background:rgba(223,255,136,0.08);
+
+    border:1px solid rgba(223,255,136,0.15);
+
+    color:var(--lime);
+
+    font-size:.75rem;
+    font-weight:700;
+    letter-spacing:.18em;
+
+    text-transform:uppercase;
+}
+
+.title{
+
+    text-align:center;
+
+    font-family:'EB Garamond',serif;
+
+    font-size:4rem;
+
+    color:white;
+
+    line-height:1;
+
+    margin-bottom:10px;
+}
+
+.subtitle{
+
+    text-align:center;
+
+    color:var(--text-soft);
+
+    font-size:1rem;
+
+    margin-bottom:34px;
+}
+
+/* =========================
+   SCANNER
+========================= */
+
+.scanner-box{
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.04),
+            rgba(255,255,255,0.02)
+        );
+
+    border:1px solid rgba(255,255,255,0.06);
+
+    border-radius:28px;
+
+    padding:22px;
+
+    margin-bottom:24px;
+}
+
+#reader{
+
+    width:100%;
+
+    overflow:hidden;
+
+    border-radius:24px;
+
+    border:4px solid var(--lime);
+
+    background:white;
+
+    box-shadow:
+        0 0 0 6px rgba(223,255,136,0.08),
+        0 15px 40px rgba(0,0,0,0.35);
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status-box{
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+
+    background:rgba(223,255,136,0.06);
+
+    border:1px solid rgba(223,255,136,0.12);
+
+    border-radius:18px;
+
+    padding:16px 20px;
+
+    color:var(--lime-bright);
+
+    font-size:1rem;
+    font-weight:600;
+
+    margin-bottom:28px;
+}
+
+.pulse{
+
+    width:12px;
+    height:12px;
+
+    border-radius:50%;
+
+    background:var(--lime);
+
+    animation:pulse 1.4s infinite;
+}
+
+@keyframes pulse{
+
+    0%{
+        transform:scale(1);
+        opacity:1;
+    }
+
+    70%{
+        transform:scale(1.8);
+        opacity:0;
+    }
+
+    100%{
+        opacity:0;
+    }
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.button-group{
+
+    display:flex;
+    gap:16px;
+}
+
+.btn{
+
+    flex:1;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    text-decoration:none;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    font-size:1rem;
+    font-weight:700;
+
+    letter-spacing:.08em;
+
+    text-transform:uppercase;
+
+    transition:.2s ease;
+}
+
+.btn-secondary{
+
+    background:rgba(255,255,255,0.03);
+
+    border:1.5px solid rgba(255,255,255,0.08);
+
+    color:white;
+}
+
+.btn-secondary:hover{
+
+    border-color:rgba(223,255,136,0.35);
+
+    background:rgba(223,255,136,0.06);
+
+    transform:translateY(-2px);
+}
+
+.btn-primary{
+
+    background:var(--lime);
+
+    color:#102d16;
+
+    box-shadow:
+        0 10px 25px rgba(223,255,136,0.18);
+}
+
+.btn-primary:hover{
+
+    background:var(--lime-bright);
+
+    transform:translateY(-2px);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:700px){
+
+    .scan-container{
+        padding:28px;
+    }
+
+    .title{
+        font-size:2.8rem;
+    }
+
+    .button-group{
+        flex-direction:column;
+    }
+}
+
+@media(max-width:520px){
+
+    body{
+        padding:18px;
+    }
+
+    .scan-container{
+        padding:22px;
+        border-radius:26px;
+    }
+
+    .title{
+        font-size:2.3rem;
+    }
+
+    .subtitle{
+        font-size:.92rem;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="scan-container">
+
+    <!-- OPTIONAL BADGE -->
+
+    <div class="top-badge">
+        ArmorSafe Scanner
+    </div>
+
+    <!-- TITLE -->
+
+    <div class="title">
+        Scan QR
+    </div>
+
+    <div class="subtitle">
+        Scan equipment QR codes to instantly access inventory records
+    </div>
+
+    <!-- QR SCANNER -->
+
+    <div class="scanner-box">
+
+        <div id="reader"></div>
+
+    </div>
+
+    <!-- STATUS -->
+
+    <div class="status-box">
+
+        <div class="pulse"></div>
+
+        <div id="status">
+            Initializing camera scanner...
+        </div>
+
+    </div>
+
+    <!-- BUTTONS -->
+
+    <div class="button-group">
+
+        <a href="/dashboard" class="btn btn-secondary">
+            Dashboard
+        </a>
+
+        <a href="/inventory" class="btn btn-primary">
+            Inventory
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+const statusText = document.getElementById("status");
+
+function onScanSuccess(decodedText){
+
+    statusText.innerHTML = "QR code detected. Opening equipment...";
+
+    html5QrcodeScanner.clear();
+
+    setTimeout(() => {
+        window.location.href = decodedText;
+    }, 700);
+}
+
+function onScanFailure(error){
+    // ignore continuous scan errors
+}
+
+const html5QrcodeScanner = new Html5QrcodeScanner(
+    "reader",
+    {
+        fps:10,
+
+        qrbox:{
+            width:260,
+            height:260
+        },
+
+        rememberLastUsedCamera:true
+    },
+    false
+);
+
+html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
+</script>
+
+</body>
+</html>
