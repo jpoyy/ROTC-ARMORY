@@ -169,7 +169,7 @@ def init_db():
     conn.close()
 
 
-APP_BASE_URL = "https://your-render-url.onrender.com"
+APP_BASE_URL = "https://rotc-armory.onrender.com"
 
 def generate_qr(item_id):
 
